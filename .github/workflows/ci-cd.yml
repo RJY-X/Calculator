@@ -52,6 +52,6 @@ jobs:
           sonar-scanner \
             -Dsonar.projectKey=RJY-X_Calculator \
             -Dsonar.organization=rjy-x \
-            -Dsonar.sources=main \
+            -Dsonar.sources=. \
             -Dsonar.host.url=${SONAR_HOST_URL} \
             -Dsonar.login=${SONAR_TOKEN}
