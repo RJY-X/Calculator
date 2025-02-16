@@ -9,18 +9,31 @@ on:
       - main
 
 jobs:
-  build:
+  docker-build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Build Docker Image
-        run: |
-          docker build -t simple-calculator .
-      
-      - name: Login to Docker Hub
+      - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Push Docker Image
-        run: docker tag simple-calculator mydockerhub/simple-calculator && docker push mydockerhub/simple-calculator
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t redaben534/simple-calculator:${{ github.sha }} .
+          docker tag redaben534/simple-calculator:${{ github.sha }} redaben534/simple-calculator:latest
+          docker push redaben534/simple-calculator:${{ github.sha }}
+          docker push redaben534/simple-calculator:latest
+
+
+  deploy:
+    needs: docker-build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Azure (Example)
+        if: success()
+        run: |
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
+          az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyCalculatorApp --deployment-container-image-name redaben534/simple-calculator:latest
