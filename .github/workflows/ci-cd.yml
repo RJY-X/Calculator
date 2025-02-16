@@ -50,8 +50,8 @@ jobs:
           SONAR_HOST_URL: "https://sonarcloud.io"
         run: |
           sonar-scanner \
-            -Dsonar.projectKey=redaben534_simple-calculator \
-            -Dsonar.organization=redaben534 \
+            -Dsonar.projectKey=RJY-X_Calculator \
+            -Dsonar.organization=rjy-x \
             -Dsonar.sources=main \
             -Dsonar.host.url=${SONAR_HOST_URL} \
             -Dsonar.login=${SONAR_TOKEN}
