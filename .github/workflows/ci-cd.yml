@@ -52,6 +52,6 @@ jobs:
           sonar-scanner \
             -Dsonar.projectKey=redaben534_simple-calculator \
             -Dsonar.organization=redaben534 \
-            -Dsonar.sources=. \
+            -Dsonar.sources=main \
             -Dsonar.host.url=${SONAR_HOST_URL} \
             -Dsonar.login=${SONAR_TOKEN}
