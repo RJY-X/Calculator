@@ -23,5 +23,35 @@ jobs:
         run: |
           docker build -t redaben534/simple-calculator:latest .
           docker push redaben534/simple-calculator:latest
+  sonarqube-analysis:
+    runs-on: ubuntu-latest
+    needs: docker-build  # Exécuter SonarQube après la build
 
-  
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17 (Required for SonarQube)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Install SonarScanner
+        run: |
+          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-5.0.1.3006-linux.zip
+          unzip sonar-scanner.zip
+          mv sonar-scanner-5.0.1.3006-linux sonar-scanner
+          echo "$(pwd)/sonar-scanner/bin" >> $GITHUB_PATH
+
+      - name: Run SonarQube Analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: "https://sonarcloud.io"
+        run: |
+          sonar-scanner \
+            -Dsonar.projectKey=redaben534_simple-calculator \
+            -Dsonar.organization=redaben534 \
+            -Dsonar.sources=. \
+            -Dsonar.host.url=${SONAR_HOST_URL} \
+            -Dsonar.login=${SONAR_TOKEN}
