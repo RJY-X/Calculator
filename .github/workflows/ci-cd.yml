@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
-        uses: app/login-action@v2
+        uses: docker/login-action@v2
         with:
           username: redaben534
           password: ${{ github.action.secrets.DOCKER_PASSWORD }}
