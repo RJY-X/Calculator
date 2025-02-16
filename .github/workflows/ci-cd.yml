@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "redaben534" --password-stdin
 
       - name: Build and Push Docker Image
         run: |
@@ -25,7 +25,6 @@ jobs:
           docker tag redaben534/simple-calculator:${{ github.sha }} redaben534/simple-calculator:latest
           docker push redaben534/simple-calculator:${{ github.sha }}
           docker push redaben534/simple-calculator:latest
-
 
   deploy:
     needs: docker-build
