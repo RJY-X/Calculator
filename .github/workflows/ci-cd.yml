@@ -19,20 +19,21 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
         with:
-          username: redaben534
-          password: ${{ github.action.secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAME }}   # Assurez-vous que ce secret est bien défini dans GitHub
+          password: ${{ secrets.DOCKER_PASSWORD }}   # Assurez-vous que ce secret est bien défini dans GitHub
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ github.action.secrets.DOCKER_USERNAME }}/simple-calculator:latest .
-          docker push ${{ github.action.secrets.DOCKER_USERNAME }}/simple-calculator:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/simple-calculator:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/simple-calculator:latest
+
   deploy:
     needs: docker-build
     runs-on: ubuntu-latest
 
     steps:
-      - name: Deploy to Azure (Example)
+      - name: Deploy to Azure
         if: success()
         run: |
-          az login --service-principal -u ${{ github.action.secrets.AZURE_CLIENT_ID }} -p ${{ github.action.secrets.AZURE_SECRET }} --tenant ${{ github.action.secrets.AZURE_TENANT }}
-          az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyCalculatorApp --deployment-container-image-name redaben534/simple-calculator:latest
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
+          az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyCalculatorApp --deployment-container-image-name ${{ secrets.DOCKER_USERNAME }}/simple-calculator:latest
