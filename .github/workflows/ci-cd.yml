@@ -24,7 +24,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/simple-calculator:latest "./DEVOPS P/app"
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/simple-calculator:latest "./DevOps\ P/app"
           docker push ${{ secrets.DOCKER_USERNAME }}/simple-calculator:latest
 
   deploy:
