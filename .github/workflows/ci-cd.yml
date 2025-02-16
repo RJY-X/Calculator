@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Log in to Docker Hub
-        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "redaben534" --password-stdin
+        run: echo "${{ github.action.secrets.DOCKER_PASSWORD }}" | docker login -u "redaben534" --password-stdin
 
       - name: Build and Push Docker Image
         run: |
@@ -32,5 +32,5 @@ jobs:
       - name: Deploy to Azure (Example)
         if: success()
         run: |
-          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_SECRET }} --tenant ${{ secrets.AZURE_TENANT }}
+          az login --service-principal -u ${{ github.action.secrets.AZURE_CLIENT_ID }} -p ${{ github.action.secrets.AZURE_SECRET }} --tenant ${{ github.action.secrets.AZURE_TENANT }}
           az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyCalculatorApp --deployment-container-image-name redaben534/simple-calculator:latest
