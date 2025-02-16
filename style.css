@@ -1,0 +1,116 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
+
+:root {
+    --primary-bg: linear-gradient(45deg, #1e1e2f, #2a2a40);
+    --button-bg: #3a3a5c;
+    --button-color: #ffffff;
+    --operator-bg: #ff9500;
+    --operator-color: #ffffff;
+    --equal-bg: #34c759;
+    --clear-bg: #ff3b30;
+    --delete-bg: #ffcc00;
+    --shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--primary-bg);
+}
+
+.calculator {
+    border: 1px solid #444;
+    padding: 20px;
+    border-radius: 16px;
+    background: var(--primary-bg);
+    box-shadow: var(--shadow);
+}
+
+input {
+    width: 100%;
+    border: none;
+    padding: 24px;
+    margin: 10px 0;
+    background: transparent;
+    font-size: 2.5rem;
+    text-align: right;
+    color: var(--button-color);
+    outline: none;
+}
+
+input::placeholder {
+    color: var(--button-color);
+}
+
+.button-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    border: none;
+    width: 70px;
+    height: 70px;
+    margin: 10px;
+    border-radius: 50%;
+    background: var(--button-bg);
+    color: var(--button-color);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+    background: #4a4a6c;
+    transform: scale(1.1);
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.operator {
+    background: var(--operator-bg);
+    color: var(--operator-color);
+}
+
+.operator:hover {
+    background: #e08900;
+}
+
+.equal {
+    background: var(--equal-bg);
+    color: var(--button-color);
+}
+
+.equal:hover {
+    background: #2da94f;
+}
+
+.clear {
+    background: var(--clear-bg);
+    color: var(--button-color);
+}
+
+.clear:hover {
+    background: #e63227;
+}
+
+.delete {
+    background: var(--delete-bg);
+    color: var(--button-color);
+}
+
+.delete:hover {
+    background: #e6b800;
+}
